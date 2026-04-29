@@ -52,7 +52,7 @@ Power the board back off once confirmed.
 This is the critical step. You need to interrupt the boot sequence at exactly the right moment.
 
 1. Make sure the PuTTY window is open and active
-2. Short **JP1** with jumper / dupon wire
+2. Short **JP2** with jumper / dupon wire
 3. Power on the board
 4. **The instant the first boot line appears** — release JP1 and tap the spacebar a few times
 
@@ -62,7 +62,7 @@ You should see U-Boot start loading the ENV and drop to a prompt:
 axg_s400_v1_sbr#
 ```
 
-**If it doesn't work first try** — power off, power on again, and briefly short JP1  a couple of times during boot. This forces the board into U-Boot mode.
+**If it doesn't work first try** — power off, power on again, and briefly short JP2  a couple of times during boot. This forces the board into U-Boot mode.
 
 ---
 
@@ -101,7 +101,7 @@ saveenv
 
 **Board not dropping to U-Boot prompt?**
 - Make sure PuTTY is the active window when you tap spacebar
-- Try shorting JP1 slightly earlier or later during power-on
+- Try shorting JP2 slightly earlier or later during power-on
 - A brief short is enough — do not hold it down
 
 If you fancy supporting the my work head over to https://www.molonlabe.holdings/#funding
