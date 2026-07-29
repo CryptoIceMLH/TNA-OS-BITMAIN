@@ -82,8 +82,7 @@ can't sneak past. Your hashpower mines what you told it to. Full stop. for more 
 **Wired or wireless — run your miners anywhere.**
 No Ethernet drop where the rig lives? Plug a **USB WiFi dongle** into the control board and TNA-OS
 brings the miner online over **WiFi**. Ethernet wins when a cable's in; otherwise the miner raises
-its own **`TNA-Setup`** hotspot with a captive setup page — connect, type in your WiFi, done. The
-USB port is **host-only** (it powers a dongle and nothing else — no backdoor into the miner), and it
+its own **`TNA-Setup`** hotspot with a captive setup page — connect, type in your WiFi, done. And it
 won't burn a single watt hashing until it actually has a network. Flashing still uses Ethernet.
 
 **Open to everything. Owned by you.**
@@ -128,7 +127,8 @@ connected; otherwise the miner raises its own **`TNA-Setup`** hotspot with a cap
 joins your network, and mines. Supported dongles (Realtek): **RTL8723DU · RTL8821CU · RTL8811CU ·
 RTL8822BU · RTL8812BU · RTL8812AU · RTL8811AU**.
 
-
+A miner with **no network yet won't waste power** — it sits idle (dashboard and hotspot still
+reachable) until Ethernet or WiFi is online, then starts mining on its own.
 
 ---
 
@@ -152,9 +152,9 @@ Its strongly advisable to install TNA OS over the clean stock firmware found on 
 4. Paste your **flash code** and let it run. The flasher lays down the complete TNA-OS image, and reboots.
 5. When it comes back up, it's TNA-OS. First boot pulls an IP by DHCP.
 
-> **⚠ Flash over Ethernet — not WiFi.** The flasher reaches your miner over the LAN by SSH, so the
-> miner must be on a **wired Ethernet** connection while you flash it. A miner that's only on WiFi
-> (or currently showing the `TNA-Setup` setup hotspot) **can't be flashed** until you plug it into
+> **⚠ Flash over Ethernet — not WiFi.** The flasher connects to your miner over your **wired
+> network**, so the miner must be on Ethernet while you flash it. A miner that's only on WiFi (or
+> currently showing the `TNA-Setup` setup hotspot) **can't be flashed** until you plug it into
 > Ethernet. WiFi is for *running and configuring* the miner — never for flashing it.
 
 > **One image, every model.** 
@@ -389,7 +389,7 @@ Three escalating recovery actions — pick the smallest one that fixes the probl
   Try this first if mining looks stuck.
 - **Power-Cycle PSU** (~5 s off) — a hard PSU off-then-on; the control board stays up, only the chips lose power and re-init. Disabled on a bypass PSU (no EN control). Confirms first.
 - **Reboot Control Board** (~60–90 s) — a full kernel reboot; everything cold, fans respool. Last resort. Confirms first.
-- **Uninstall TNA-OS** — restore the miner to stock Bitmain firmware. Runs locally on the miner (no PC or SSH needed), **double-confirmed** — the second step makes you type `RESTORE`. Destructive and irreversible from here (you'd re-flash to get TNA-OS back).
+- **Uninstall TNA-OS** — restore the miner to stock Bitmain firmware. Runs locally on the miner (no PC needed), **double-confirmed** — the second step makes you type `RESTORE`. Destructive and irreversible from here (you'd re-flash to get TNA-OS back).
 
 The overview strip shows the model + ASIC, firmware version, daemon uptime, IP, MAC, last boot reason, the **power state** (Idle vs Running), and the real **PSU rail** (EN) state — which can be ON even while mining is Idle.
 
