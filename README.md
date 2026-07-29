@@ -2,7 +2,7 @@
 
 ### The firmware your Antminer was supposed to ship with.
 
-**Version 0.10.19** · Antminer S19 series · Antminer S21 series compatible with all A113D Amlogic control baords.
+**Version 0.11.0** · Antminer S19 series · Antminer S21 series compatible with all A113D Amlogic control baords.
 
 ---
 
@@ -79,6 +79,13 @@ Point a pool at non-Bitcoin SHA-256 work and TNA-OS catches it, throttles every 
 100 MHz, and lights up a warning on the dashboard. Checked *per pool* with a debounce, so a decoy
 can't sneak past. Your hashpower mines what you told it to. Full stop. for more info read about <a href="https://github.com/CryptoIceMLH/TNA-OS-CANAAN/blob/main/shitcoin-detector-nbits.md" target="_blank">"nbits" here </a>
 
+**Wired or wireless — run your miners anywhere.**
+No Ethernet drop where the rig lives? Plug a **USB WiFi dongle** into the control board and TNA-OS
+brings the miner online over **WiFi**. Ethernet wins when a cable's in; otherwise the miner raises
+its own **`TNA-Setup`** hotspot with a captive setup page — connect, type in your WiFi, done. The
+USB port is **host-only** (it powers a dongle and nothing else — no backdoor into the miner), and it
+won't burn a single watt hashing until it actually has a network. Flashing still uses Ethernet.
+
 **Open to everything. Owned by you.**
 A clean REST/JSON API on the same address as the dashboard. Home Assistant in three lines of YAML.
 And the whole thing runs **100% local** 
@@ -112,6 +119,22 @@ families, and the per-board view is authoritative; the top-level numbers sum wha
 
 ---
 
+## Wired or wireless — your call 📶
+
+No Ethernet where your miners live? Plug a **USB WiFi dongle** into the control board and TNA-OS
+brings the miner online over **WiFi** — no cable required. Ethernet always wins when a cable is
+connected; otherwise the miner raises its own **`TNA-Setup`** hotspot with a captive setup page
+(connect from your phone and it pops up on its own), you enter your WiFi credentials, and it reboots,
+joins your network, and mines. Supported dongles (Realtek): **RTL8723DU · RTL8821CU · RTL8811CU ·
+RTL8822BU · RTL8812BU · RTL8812AU · RTL8811AU**.
+
+**Safe by design:** the USB port is **host-only** — it powers a WiFi dongle and nothing else. No
+USB-gadget backdoor into the miner, no pulling the filesystem off the port. And a miner with **no
+network yet won't waste power** — it sits idle (dashboard/hotspot still reachable) until Ethernet or
+WiFi is online, then starts mining on its own.
+
+---
+
 
 # User Manual
 
@@ -131,6 +154,11 @@ Its strongly advisable to install TNA OS over the clean stock firmware found on 
 3. Enter the miner's **IP address** — the flasher pings it first, so a bad address never burns your code.
 4. Paste your **flash code** and let it run. The flasher lays down the complete TNA-OS image, and reboots.
 5. When it comes back up, it's TNA-OS. First boot pulls an IP by DHCP.
+
+> **⚠ Flash over Ethernet — not WiFi.** The flasher reaches your miner over the LAN by SSH, so the
+> miner must be on a **wired Ethernet** connection while you flash it. A miner that's only on WiFi
+> (or currently showing the `TNA-Setup` setup hotspot) **can't be flashed** until you plug it into
+> Ethernet. WiFi is for *running and configuring* the miner — never for flashing it.
 
 > **One image, every model.** 
 > the firmware works out which miner hashboard it's controlling by itself.
@@ -317,7 +345,28 @@ Live, each board shows its zone (WARN / HOT / DANGER) as it crosses each step. *
 
 **Difficulty (Advanced/Pro)** — **Initial Suggested Stratum Difficulty** (default 1000; the pool has final say), plus **Job Interval** (default 20 ms), **VR-Frequency** (version-rolling rate, with the resulting wrap-around time shown live), and **Proxy Miner Difficulty** (default 10000, used only when TNA-OS acts as a stratum proxy — see Army). Leave these alone unless you know why you're changing them.
 
-**Network** — **Hostname** (shown in the header, in pool worker reports, and on your router's device list; reboot to apply). **IP assignment** is **DHCP only** — the toggle is locked and static addressing isn't implemented yet; for a fixed address, set a **DHCP reservation** on your router. The card shows live Ethernet status, IP and MAC.
+**Network** — **Hostname** (shown in the header, in pool worker reports, and on your router's device
+list; reboot to apply). The card shows your **live connection at a glance — Ethernet, WiFi (with the
+joined SSID + signal + dongle chipset), or the `TNA-Setup` setup hotspot** — plus status, IP and MAC.
+Addresses are assigned by **DHCP**; for a fixed one, set a **DHCP reservation** on your router.
+
+**WiFi (optional USB dongle) — how the setup hotspot works, step by step.** With **no Ethernet
+cable** connected, plug a supported dongle into the control board and:
+
+1. The miner raises an **open** WiFi hotspot named **`TNA-Setup`** — no password needed to join it.
+   (Give it up to ~1 minute after boot to appear.)
+2. On your phone or laptop, connect to **`TNA-Setup`**. The setup page usually pops up on its own
+   (captive portal); if it doesn't, just open a browser to **`http://192.168.4.1`**.
+3. The **WiFi Setup** card asks for **your** home/office network name (SSID) and password
+   (min 8 characters). Enter them and press **Connect**.
+4. The miner saves the credentials, **reboots, and joins your WiFi.** Put your phone/laptop back on
+   your normal network and find the miner at its new DHCP address (check your router, or the
+   miner's screen).
+
+While it has no network, the miner stays **idle — no hashing — until Ethernet _or_ WiFi comes
+online**, then it starts mining automatically (so it never burns power with no pool to reach and
+stays reachable for setup). Remember: **flashing always needs Ethernet** (see *Flash the firmware*)
+— the hotspot is for configuring WiFi, not for flashing.
 
 > Pool hostnames resolve reliably: as of v0.10.19 the DHCP client falls back to your **gateway as the
 > resolver** when a lease carries no DNS server, so pools entered by hostname keep working even on
@@ -403,6 +452,8 @@ The access model is deliberate and simple:
 | Miner throttled to 100 MHz | Shitcoin protection — a pool served non-Bitcoin work. Point it back at a Bitcoin pool. |
 | Rig cut power and locked out | The Danger threshold tripped. Let it cool, fix airflow, then press Power ON. |
 | Flash fails on an old build | Some miners carrying stale on-board data need a factory reset to stock first, then flash TNA-OS. |
+| WiFi hotspot (`TNA-Setup`) doesn't appear | Use a supported Realtek dongle, boot with **no Ethernet cable**, and give it ~1 min. Flashing itself must always be done over Ethernet. |
+| Miner shows Idle and won't mine | It has no network IP yet — plug in Ethernet or finish WiFi setup. TNA-OS won't hash without a reachable network ("no IP, no mining"). |
 
 ---
 
