@@ -128,10 +128,7 @@ connected; otherwise the miner raises its own **`TNA-Setup`** hotspot with a cap
 joins your network, and mines. Supported dongles (Realtek): **RTL8723DU · RTL8821CU · RTL8811CU ·
 RTL8822BU · RTL8812BU · RTL8812AU · RTL8811AU**.
 
-**Safe by design:** the USB port is **host-only** — it powers a WiFi dongle and nothing else. No
-USB-gadget backdoor into the miner, no pulling the filesystem off the port. And a miner with **no
-network yet won't waste power** — it sits idle (dashboard/hotspot still reachable) until Ethernet or
-WiFi is online, then starts mining on its own.
+
 
 ---
 
