@@ -638,8 +638,8 @@ there's no Ethernet. Units with no dongle are unaffected — all WiFi fields rea
    hotspot — **SSID `TNA-Setup`** (open), UI/gateway at `http://192.168.4.1/` — with a captive
    portal that auto-pops the setup page when you connect.
 2. `POST /api/wifi/configure` `{"ssid": "...", "password": "..."}` (password ≥ 8 chars), or use the
-   dashboard's **WiFi Setup** card. Writes `/config/wpa_supplicant.conf` and **reboots into station
-   mode** to join that network.
+   dashboard's **WiFi Setup** card. Saves the credentials and **reboots into station mode** to join
+   that network.
 3. Returns `{"ok": true, "msg": "credentials saved, rebooting"}` or `{"ok": false, "err": "..."}`.
 
 **Live status** in `GET /api/system/info`:
@@ -655,8 +655,8 @@ there's no Ethernet. Units with no dongle are unaffected — all WiFi fields rea
 | `wifiSignalPct` / `wifiLinkQualityPct` | 0–100 | signal / link-quality bars |
 | `wifiRSSI` | dBm (int) | true dBm when the driver reports it, else `0` |
 
-> **⚠ Flashing must happen over Ethernet.** The flasher reaches the miner via SSH over the LAN, so a
-> WiFi-only miner (in AP/setup mode) **cannot be flashed** until it's on Ethernet. WiFi is for
+> **⚠ Flashing must happen over Ethernet.** The flasher connects to the miner over the wired network,
+> so a WiFi-only miner (in AP/setup mode) **cannot be flashed** until it's on Ethernet. WiFi is for
 > post-flash access and configuration only.
 
 **"No IP, no mining":** the miner stays **Idle** (UI + hotspot reachable, hashboards off) until it
