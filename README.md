@@ -102,9 +102,9 @@ for that chip family, and starts mining. Same firmware, same dashboard, same API
 | Antminer S19K Pro | BM1366 | 77 | 894 | 3 |
 | Antminer S19j Pro 104T | BM1362 | 126 | 672 | 3 |
 | Antminer S21 | BM1368 | 108 | 1276 | 3 |
-| Antminer S19 XP Hydro | BM1366 | 204 | 894 | 3 |  🧪 Pending Live Validation on hardware |
+| Antminer S19 XP Hydro | BM1366 | 204 | 894 | 3 |  🧪 Pending Live Validation on hardware 
 | Antminer T21 | BM1368 | 108 | 1276 | 3 | 🧪 Pending Live Validation on hardware
-| Antminer S21 Pro | BM1370 | 65 | 2040 | 3 |  Pending Live Validation on hardware
+| Antminer S21 Pro | BM1370 | 65 | 2040 | 3 | 🧪  Pending Live Validation on hardware
 | Antminer S21 XP | BM1370 | 91 | 2040 | 3 | 🧪 Pending Live Validation on hardware
 | Antminer S21+ Hydro | BM1370 | 95 | 2040 | 3 | 🧪 Pending Live Validation on hardware
 
