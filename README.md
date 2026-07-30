@@ -96,17 +96,17 @@ And the whole thing runs **100% local**
 Plug a board in and TNA-OS reads its EEPROM, identifies the model, configures the ASIC registers
 for that chip family, and starts mining. Same firmware, same dashboard, same API on every one:
 
-| Model | ASIC | Chips/board | Cores/chip | Boards |
-|---|---|---|---|---|
+| Model | ASIC | Chips/board | Cores/chip | Boards | Status |
+|---|---|---|---|---|---|
 | Antminer S19 XP | BM1366 | 110 | 894 | 3 |
 | Antminer S19K Pro | BM1366 | 77 | 894 | 3 |
 | Antminer S19j Pro 104T | BM1362 | 126 | 672 | 3 |
 | Antminer S21 | BM1368 | 108 | 1276 | 3 |
-| Antminer S19 XP Hydro | BM1366 | 204 | 894 | 3 | 🧪 Pending Live Validation on hardware|
-| Antminer T21 | BM1368 | 108 | 1276 | 3 | 🧪 Pending Live Validation on hardware|
-| Antminer S21 Pro | BM1370 | 65 | 2040 | 3 |  Pending Live Validation on hardware|
-| Antminer S21 XP | BM1370 | 91 | 2040 | 3 | 🧪 Pending Live Validation on hardware|
-| Antminer S21+ Hydro | BM1370 | 95 | 2040 | 3 | 🧪 Pending Live Validation on hardware|
+| Antminer S19 XP Hydro | BM1366 | 204 | 894 | 3 |  🧪 Pending Live Validation on hardware |
+| Antminer T21 | BM1368 | 108 | 1276 | 3 | 🧪 Pending Live Validation on hardware
+| Antminer S21 Pro | BM1370 | 65 | 2040 | 3 |  Pending Live Validation on hardware
+| Antminer S21 XP | BM1370 | 91 | 2040 | 3 | 🧪 Pending Live Validation on hardware
+| Antminer S21+ Hydro | BM1370 | 95 | 2040 | 3 | 🧪 Pending Live Validation on hardware
 
 **Mixed-chip (hybrid) rigs are supported** — a single miner may carry boards of different
 families, and the per-board view is authoritative; the top-level numbers sum whatever is fitted.
